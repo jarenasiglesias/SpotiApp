@@ -30,6 +30,15 @@
         <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
       </div>
     </div>
+	
+	<form>
+		<input type="text" class="textBox" id="searchArtist">
+		<input type="submit" class="btn" id="btn-artist" value="buscar artista">
+	</form>
+
+	<div id="result">
+		
+	</div>
 
     <script id="user-profile-template" type="text/x-handlebars-template">
       <h1>Logged in as {{display_name}}</h1>
@@ -137,6 +146,38 @@
         }
       })();
     </script>
+    <script type="text/javascript">
+    // Inject API Console client ID
+      var API_CONSOLE_CLIENT_ID = '8897482848704f2a8f8d7c79726a70d4';
+      $(document).ready(function() {
+        // Highlight syntax
+        $('pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+
+        // Add hyperlinks
+        jQuery.extend(jQuery.fn.linkify.plugins, {
+          spotify: {
+            re: /spotify:(artist|app|album|local|search|track|user):([:%\+\w]+)/g,
+            tmpl: '<a href="spotify:$1:$2">spotify:$1:$2</a>'
+          }
+        });
+        $('code.json').linkify();
+
+        // Initialize ZeroClipboard
+        ZeroClipboard.config({ moviePath: '/static/js/ZeroClipboard.swf' });
+        var zeroClipboard = new ZeroClipboard($('.btn-clipboard'));
+        zeroClipboard.on('copy', function(event) {
+          // Copy the contents of the next <pre> element
+          var $el = $(event.target).parent().nextAll("pre").first();
+          zeroClipboard.setText($el.text());
+        });
+
+        // Initialize cURL preview
+        CurlPreview.init();
+      });
+    </script>
+    <script src="js/spotify.js"></script>
   </body>
 </html>
 
