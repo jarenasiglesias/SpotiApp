@@ -154,27 +154,6 @@
         $('pre code').each(function(i, block) {
           hljs.highlightBlock(block);
         });
-
-        // Add hyperlinks
-        jQuery.extend(jQuery.fn.linkify.plugins, {
-          spotify: {
-            re: /spotify:(artist|app|album|local|search|track|user):([:%\+\w]+)/g,
-            tmpl: '<a href="spotify:$1:$2">spotify:$1:$2</a>'
-          }
-        });
-        $('code.json').linkify();
-
-        // Initialize ZeroClipboard
-        ZeroClipboard.config({ moviePath: '/static/js/ZeroClipboard.swf' });
-        var zeroClipboard = new ZeroClipboard($('.btn-clipboard'));
-        zeroClipboard.on('copy', function(event) {
-          // Copy the contents of the next <pre> element
-          var $el = $(event.target).parent().nextAll("pre").first();
-          zeroClipboard.setText($el.text());
-        });
-
-        // Initialize cURL preview
-        CurlPreview.init();
       });
     </script>
     <script src="js/spotify.js"></script>

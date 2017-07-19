@@ -1,8 +1,9 @@
+var obj;
+
 (function($) {
 
 var $button = $('#btn-artist');
 var $divResults = $('#result');
-var $artistResults;
 var $textBoxArtist = $('#searchArtist');
 
 $button.on("click", function(e) {
@@ -26,6 +27,8 @@ $button.on("click", function(e) {
 
   var access_token = params.access_token;
 
+	
+
 $.ajax({
    url: 'https://api.spotify.com/v1/search',
    dataType: 'json',
@@ -37,25 +40,17 @@ $.ajax({
        'Authorization': 'Bearer ' + access_token
    },
    success: function(response) {   	
-  			$divResults.load('https://api.spotify.com/v1/search?type=artist&query=' + $textBoxArtist.val() ,completeFunction);   
-  			var obj = JSON.parse($divResults.load('https://api.spotify.com/v1/search?type=artist&query=' + $textBoxArtist.val() ,completeFunction) );
-  			console.log(obj);
-
+   		getArtists(response);
+   		obj = response;
    }
 });
 });
 
-  function completeFunction(responseText, textStatus, request) {
-    
-     $divResults.css('border', '1px solid #000');
-   
-    console.log(request);
-   
-    if(textStatus === 'error') {
-   
-      $divResults.text('Error del GÚENOOORL ' + request.status + ' ' + request.statusText);
-    } 
-  }
-
 
 })(jQuery);
+
+function getArtists(response) {
+	var nameArtist = response.artists.items[0].name;
+	var img = 
+	document.getElementById('result').innerText = nameArtist;
+}
